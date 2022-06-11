@@ -9,7 +9,7 @@ export default function App() {
 
 return (
     <div>
-        { user ? (
+        {  user ? (
             <div>
                 <SignInSignUp />
             </div>
