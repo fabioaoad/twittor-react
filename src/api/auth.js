@@ -1,7 +1,7 @@
 import { API_HOST } from "../utils/constant"
 
 export function signUpApi(user){
-  const url = `${API_HOST}/registro` ;
+  const url = `${API_HOST}/registro`;
 
   const userTemp = {
     ...user,
@@ -30,4 +30,37 @@ export function signUpApi(user){
   }).catch(err => {
     return err;
   });
+}
+
+
+
+
+export function signInApi(user){
+  const url = `${API_HOST}/login`;
+  const data = {
+    ...user,
+    email: user.email.toLowerCase()
+  };
+
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return fetch(url, params).then(response => {
+    if (response.status >= 200 && response.status < 300){
+      return response.json()
+    } else {
+      return { message: "Usuario o contraseña incorrecto"}
+    }
+  }).then(result => {
+    return result;
+  })
+    .catch(err => {
+    return err;
+  })
+
 }

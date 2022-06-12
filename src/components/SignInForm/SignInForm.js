@@ -3,6 +3,7 @@ import { Form, Button,Spinner } from "react-bootstrap";
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import { isEmailValid } from "../../utils/validations";
+import { signInApi } from "../../api/auth";
 
 
 import "./SignInForm.scss"
@@ -29,7 +30,18 @@ export default  function SignInForm() {
         toast.warning("Email es invalido")
       } else {
         setSignInLoading(true);
-        toast.success("Form login OK.")
+        signInApi(formData).then(response => {
+          if (response.message ){
+            toast.warning(response.message)
+          } else {
+            console.log(response.token);
+          }
+        }).catch(() => {
+          toast.error("Error en el servidor, inténtelo más tarde")
+        })
+          .finally(() => {
+            setSignInLoading(false)
+          })
       }
     }
 
