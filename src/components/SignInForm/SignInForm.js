@@ -1,15 +1,40 @@
 import React, { useState } from 'react';
-import { Form, Button,Spinner } from "react-bootstrap"
+import { Form, Button,Spinner } from "react-bootstrap";
+import { values, size } from "lodash";
+import { toast } from "react-toastify";
+import { isEmailValid } from "../../utils/validations";
+
 
 import "./SignInForm.scss"
 
 
 export default  function SignInForm() {
   const [formData, setFormData] = useState(initialFormValue());
+  const [signInLoading, setSignInLoading] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
+
+    let validCount = 0;
+    values(formData).some(value => {
+      value && validCount++
+      return null;
+    })
+
+    if (size(formData) !== validCount){
+      toast.warning("Completa todos los campos del formulario");
+    } else {
+      if (!isEmailValid(formData.email)){
+        toast.warning("Email es invalido")
+      } else {
+        setSignInLoading(true);
+        toast.success("Form login OK.")
+      }
+    }
+
+    console.log(validCount);
+
   };
 
   const onChange = e => {
@@ -37,7 +62,7 @@ export default  function SignInForm() {
             ></Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit">
-            Iniciar sesión
+            { !signInLoading ? "Iniciar sesión": <Spinner animation="border" />}
           </Button>
         </Form>
       </div>
