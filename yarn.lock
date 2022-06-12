@@ -4420,6 +4420,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "clsx@npm:1.1.1"
+  checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
+  languageName: node
+  linkType: hard
+
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -10971,6 +10978,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-toastify@npm:^9.0.4":
+  version: 9.0.4
+  resolution: "react-toastify@npm:9.0.4"
+  dependencies:
+    clsx: ^1.1.1
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 130c443f1c6f72033dbed6b5c41c88a5fab6c7e8f7bc320c400c09bc7ca11116158d554feb212b160aa1320308b69771217663bd0762b5ffd5f68bef6dba5b86
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.2":
   version: 4.4.2
   resolution: "react-transition-group@npm:4.4.2"
@@ -12617,11 +12636,13 @@ __metadata:
     "@testing-library/user-event": ^13.5.0
     bootstrap: ^5.1.3
     eslint-config-react-app: ^7.0.1
+    lodash: ^4.17.21
     node-sass: ^7.0.1
     react: ^18.1.0
     react-bootstrap: ^2.4.0
     react-dom: ^18.1.0
     react-scripts: 5.0.1
+    react-toastify: ^9.0.4
     web-vitals: ^2.1.4
   languageName: unknown
   linkType: soft
