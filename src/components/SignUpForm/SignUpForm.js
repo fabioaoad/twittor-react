@@ -2,13 +2,15 @@ import React, {useState} from "react";
 import { Row, Col, Form, Button, Spinner } from "react-bootstrap"
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
-import {isEmailValid } from "../../utils/validations"
+import {isEmailValid } from "../../utils/validations";
+import { signUpApi  } from  "../../api/auth"
 
 import "./SignUpForm.scss"
 
 export default function SignUpForm(props) {
   const { setShowModal } = props;
-  const [formData, setFormData] = useState(iniciarFormValue());
+  const [formData, setFormData] = useState(initialFormValue());
+  const [signUpLoading, setSignUpLoading] = useState(false);
 
   const onSubmit = e => {
         e.preventDefault();
@@ -35,7 +37,23 @@ export default function SignUpForm(props) {
             toast.warning("La contraseña tiene que tener al menos 6 caracteres")
           }
           else {
-            toast.success("Formulario OK.")
+            setSignUpLoading(true);
+            signUpApi(formData).then(response => {
+              if (response.code){
+                toast.warning(response.message);
+              }
+              else {
+                toast.success("El registro ha sido correcto");
+                setShowModal(false);
+                setFormData(initialFormValue());
+              }
+            })
+              .catch(() => {
+                toast.error("Error del servidor, intentelo más tarde!");
+              })
+              .finally(() => {
+                setSignUpLoading(false);
+              })
           }
         }
 
@@ -105,7 +123,7 @@ export default function SignUpForm(props) {
 
 
               <Button variant="primary" type="submit">
-                  Registrarse
+                { !signUpLoading ? "Registrarse": <Spinner animation={"border"} /> }
               </Button>
             </Form>
         </div>
@@ -113,7 +131,7 @@ export default function SignUpForm(props) {
 }
 
 
-function iniciarFormValue(){
+function initialFormValue(){
   return{
     nombre:"",
     apellidos:"",
