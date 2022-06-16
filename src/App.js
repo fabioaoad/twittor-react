@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SignInSignUp from "./page/SignInSignUp"
-import { ToastContainer } from "react-toastify"
-import { AuthContext } from "./utils/context"
-import { isUserLogedApi } from "./api/auth"
+import SignInSignUp from "./page/SignInSignUp";
+import { ToastContainer } from "react-toastify";
+import { AuthContext } from "./utils/context";
+import { isUserLogedApi } from "./api/auth";
+import Routing from "./routes/Routing";
 
 
 
@@ -24,7 +25,7 @@ export default function App() {
 
 return (
     <AuthContext.Provider value={user}>
-        {  user ? <h1>Estas logeado</h1> : <SignInSignUp setRefreshCheckLogin={setRefreshCheckLogin}/>}
+        {  user ? <Routing /> : <SignInSignUp setRefreshCheckLogin={setRefreshCheckLogin}/>}
       <ToastContainer
         position="top-right"
         autoClose={5000}
