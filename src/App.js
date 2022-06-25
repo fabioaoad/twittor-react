@@ -25,7 +25,7 @@ export default function App() {
 
 return (
     <AuthContext.Provider value={user}>
-        {  user ?  <Routing />  :  <SignInSignUp setRefreshCheckLogin={setRefreshCheckLogin}/> }
+        {  user ?  <Routing setRefreshCheckLogin={setRefreshCheckLogin}/>  :  <SignInSignUp setRefreshCheckLogin={setRefreshCheckLogin}/> }
       <ToastContainer
         position="top-right"
         autoClose={5000}
