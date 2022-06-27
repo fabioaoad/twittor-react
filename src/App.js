@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SignInSignUp from "./page/SignInSignUp";
 import { ToastContainer } from "react-toastify";
-import { AuthContext } from "./utils/context";
+import { AuthContext } from "./utils/contexts";
 import { isUserLogedApi } from "./api/auth";
 import Routing from "./routes/Routing";
 
@@ -15,7 +15,7 @@ export default function App() {
 
   useEffect(() => {
     setUser(isUserLogedApi());
-    console.log(isUserLogedApi());
+    //console.log(isUserLogedApi());
     setRefreshCheckLogin(false);
     setLoadUser(true);
   }, [refreshCheckLogin]);
