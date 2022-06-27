@@ -31,7 +31,9 @@ function User(props){
   return(
     <BasicLayout className="user">
       <div className="user__title">
-        <h2>Fabio Martin Aoad</h2>
+        <h2>
+          { user  ?  `${user.nombre} ${user.apellidos}` : "Este usuario no existe"}
+        </h2>
       </div>
       <div>
         Banner Usuario
