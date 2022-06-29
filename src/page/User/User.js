@@ -4,6 +4,7 @@ import BasicLayout from "../../layout/BasicLayout";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import  { getUserApi } from "../../api/user";
+import BannerAvatar from "../../components/User/BannerAvatar";
 
 import "./User.scss"
 
@@ -35,9 +36,7 @@ function User(props){
           { user  ?  `${user.nombre} ${user.apellidos}` : "Este usuario no existe"}
         </h2>
       </div>
-      <div>
-        Banner Usuario
-      </div>
+      <BannerAvatar user={user}/>
       <div>
         Info Usuario
       </div>
