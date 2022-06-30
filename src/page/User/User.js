@@ -3,6 +3,7 @@ import { Button, Spinner } from "react-bootstrap";
 import BasicLayout from "../../layout/BasicLayout";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 import  { getUserApi } from "../../api/user";
 import BannerAvatar from "../../components/User/BannerAvatar";
 
@@ -15,6 +16,8 @@ function User(props){
   const { params } = match
   const [user, setUser] = useState(null);
   //console.log(user);
+  const loggedUser = useAuth();
+ // console.log(loggedUser);
 
   useEffect(() => {
     getUserApi(params.id).then(response => {
@@ -36,7 +39,7 @@ function User(props){
           { user  ?  `${user.nombre} ${user.apellidos}` : "Este usuario no existe"}
         </h2>
       </div>
-      <BannerAvatar user={user}/>
+      <BannerAvatar user={user} loggedUser={loggedUser}/>
       <div>
         Info Usuario
       </div>
