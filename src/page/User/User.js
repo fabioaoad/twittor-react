@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import  { getUserApi } from "../../api/user";
 import BannerAvatar from "../../components/User/BannerAvatar";
+import InfoUser from "../../components/User/InfoUser";
 
 import "./User.scss"
 
@@ -40,9 +41,7 @@ function User(props){
         </h2>
       </div>
       <BannerAvatar user={user} loggedUser={loggedUser}/>
-      <div>
-        Info Usuario
-      </div>
+      <InfoUser user={user} />
       <div className="user__tweets">
         Lista Tweets
       </div>
