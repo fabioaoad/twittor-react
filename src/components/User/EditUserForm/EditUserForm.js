@@ -9,6 +9,12 @@ export default function EditUserForm(props){
   //console.log(props);
   const { user, setShowModal } = props;
   const [formData, setFormData] = useState(initialValue(user));
+
+  const onChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  };
+
+
   //console.log(user);
   const onSubmit = e => {
   e.preventDefault();
@@ -23,27 +29,28 @@ export default function EditUserForm(props){
           <Form.Group>
             <Row>
               <Col>
-                <Form.Control type="text" placeholder="Nombre" name="nombre" defaultValue={formData.nombre} />
+                <Form.Control type="text" placeholder="Nombre" name="nombre" defaultValue={formData.nombre} onChange={onChange} />
               </Col>
               <Col>
-                <Form.Control type="text" placeholder="Apellidos" name="apellidos" defaultValue={formData.apellidos}/>
+                <Form.Control type="text" placeholder="Apellidos" name="apellidos" defaultValue={formData.apellidos} onChange={onChange} />
               </Col>
             </Row>
           </Form.Group>
 
           <Form.Group>
-              <Form.Control as="textarea" row="3" placeholder="Agrega tu biografía" type="text" name="biografia" defaultValue={formData.biografia} />
+              <Form.Control as="textarea" row="3" placeholder="Agrega tu biografía" type="text" name="biografia" defaultValue={formData.biografia} onChange={onChange} />
           </Form.Group>
 
           <Form.Group>
-              <Form.Control type="text" placeholder="Sitio Web" name="sitioWeb" defaultValue={formData.sitioWeb} />
+              <Form.Control type="text" placeholder="Sitio Web" name="sitioWeb" defaultValue={formData.sitioWeb} onChange={onChange} />
           </Form.Group>
 
           <Form.Group>
             <DatePicker
-              placeholder="Fecha de nacimiento"
-            locale={es}
+              plac  eholder="Fecha de nacimiento"
+              locale={es}
               selected={new Date(formData.fechaNacimiento)}
+              onChange={value =>setFormData({ ...formData, fechaNacimiento: value})}
             />
           </Form.Group>
 
