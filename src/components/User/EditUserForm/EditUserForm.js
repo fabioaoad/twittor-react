@@ -1,5 +1,5 @@
 import React,{ useState, useCallback } from 'react';
-import {Form, Button, Row, Col, FormGroup, FormControl} from "react-bootstrap";
+import {Form, Button, Row, Col, Spinner, FormGroup, FormControl} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import { useDropzone } from "react-dropzone";
@@ -22,6 +22,8 @@ export default function EditUserForm(props){
 
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar ?  `${API_HOST}/obtenerAvatar?id=${user.id}` : null);
   const [avatarFile, setAvatarFile] = useState(null);
+
+  const [loading, setLoading] = useState(false);
 
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,31 +67,35 @@ export default function EditUserForm(props){
 
 
   //console.log(user);
-  const onSubmit = e => {
+  const onSubmit = async e => {
   e.preventDefault();
+  setLoading(true);
     //console.log("Editando usuario...");
     //console.log(formData);
     //console.log(bannerFile);
     //console.log(avatarFile);
 
     if (bannerFile){
-      uploadBannerApi(bannerFile).catch(() => {
+     await uploadBannerApi(bannerFile).catch(() => {
         toast.error("Error al subir el nuevo banner");
       });
     }
 
     if (avatarFile){
-      uploadAvatarApi(avatarFile).catch(() => {
+     await uploadAvatarApi(avatarFile).catch(() => {
         toast.error("Error al subir el nuevo avatar");
       });
     }
 
-    updateInfoApi(formData).then(() => {
+    await updateInfoApi(formData).then(() => {
       setShowModal(false);
     })
       .catch(() => {
         toast.error("Error al actulizar los datos");
       })
+
+    setLoading(false);
+    window.location.reload();
 
   };
 
@@ -142,7 +148,7 @@ export default function EditUserForm(props){
           </Form.Group>
 
           <Button className="btn-submit" variant="primary" type="submit">
-              Actualizar
+            {loading && <Spinner animation="border" size="sm" />}Actualizar
           </Button>
         </Form>
       </div>
