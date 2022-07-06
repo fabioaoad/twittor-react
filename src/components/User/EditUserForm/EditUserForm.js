@@ -12,12 +12,17 @@ export default function EditUserForm(props){
   //console.log(props);
   const { user, setShowModal } = props;
   const [formData, setFormData] = useState(initialValue(user));
-  const [bannerUrl, setBannerUrl] = useState(
-    user?.banner ?  `${API_HOST}/obtenerBanner?id=${user.id}` : null
-  );
+
+
+  const [bannerUrl, setBannerUrl] = useState(user?.banner ?  `${API_HOST}/obtenerBanner?id=${user.id}` : null);
   const [bannerFile, setBannerFile] = useState(null);
 
 
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar ?  `${API_HOST}/obtenerAvatar?id=${user.id}` : null);
+  const [avatarFile, setAvatarFile] = useState(null);
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onDropBanner = useCallback(acceptedFile => {
     //console.log(acceptedFile);
     const file = acceptedFile[0];
@@ -33,6 +38,23 @@ export default function EditUserForm(props){
     onDrop: onDropBanner
   });
 
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onDropAvatar = useCallback(acceptedFile => {
+    console.log(acceptedFile);
+    const file = acceptedFile[0];
+    setAvatarUrl(URL.createObjectURL(file));
+    setAvatarFile(file);
+  });
+
+  const { getRootProps: getRootAvatarProps, getInputProps: getInputAvatarProps } = useDropzone({
+    accept:"image/jpeg, image/png",
+    noKeyboard: true,
+    multiple: false,
+    onDrop: onDropAvatar
+  })
+
+
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   };
@@ -46,6 +68,7 @@ export default function EditUserForm(props){
     console.log("Editando usuario...");
     console.log(formData);
     console.log(bannerFile);
+    console.log(avatarFile);
   };
 
     return (
@@ -55,6 +78,15 @@ export default function EditUserForm(props){
              { ...getRootBannerProps() }
         >
           <input { ...getInputBannerProps() }/>
+          <Camera />
+        </div>
+
+        <div
+        className="avatar"
+        style={{backgroundImage: `url('${avatarUrl}')` }}
+        { ...getRootAvatarProps() }
+        >
+        <input { ...getInputAvatarProps() }/>
           <Camera />
         </div>
         <Form onSubmit={onSubmit}>
