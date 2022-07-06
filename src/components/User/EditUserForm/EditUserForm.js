@@ -3,8 +3,10 @@ import {Form, Button, Row, Col, FormGroup, FormControl} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import { useDropzone } from "react-dropzone";
+import { toast } from "react-toastify";
 import { API_HOST } from "../../../utils/constant";
 import { Camera } from "../../../utils/Icons";
+import { uploadBannerApi } from "../../../api/user";
 
 import "./EditUserForm.scss";
 
@@ -65,10 +67,17 @@ export default function EditUserForm(props){
   //console.log(user);
   const onSubmit = e => {
   e.preventDefault();
-    console.log("Editando usuario...");
-    console.log(formData);
-    console.log(bannerFile);
-    console.log(avatarFile);
+    //console.log("Editando usuario...");
+    //console.log(formData);
+    //console.log(bannerFile);
+    //console.log(avatarFile);
+
+    if (bannerFile){
+      uploadBannerApi(bannerFile).catch(() => {
+        toast.error("Error al subir el nuevo banner");
+      })
+    }
+
   };
 
     return (
