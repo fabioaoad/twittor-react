@@ -6,7 +6,7 @@ import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import { API_HOST } from "../../../utils/constant";
 import { Camera } from "../../../utils/Icons";
-import { uploadBannerApi } from "../../../api/user";
+import { uploadBannerApi, uploadAvatarApi } from "../../../api/user";
 
 import "./EditUserForm.scss";
 
@@ -75,7 +75,13 @@ export default function EditUserForm(props){
     if (bannerFile){
       uploadBannerApi(bannerFile).catch(() => {
         toast.error("Error al subir el nuevo banner");
-      })
+      });
+    }
+
+    if (avatarFile){
+      uploadAvatarApi(avatarFile).catch(() => {
+        toast.error("Error al subir el nuevo avatar");
+      });
     }
 
   };
