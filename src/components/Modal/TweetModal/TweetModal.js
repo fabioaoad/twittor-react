@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button } from "react-bootstrap";
+import classNames from "classnames";
 import { Close } from "../../../utils/Icons";
 import "./TweetModal.scss";
 
@@ -7,8 +8,12 @@ export default function TweetModal(props){
   const { show, setShow } = props;
   const [message, setMessage] = useState("");
 
-  const onSubmit = () =>{
-    console.log('Enviando tweet');
+  const maxLength = 280;
+
+  const onSubmit = (e) =>{
+    e.preventDefault();
+    console.log('Enviando tweet!!!');
+    console.log(message);
   }
 
   return (
@@ -31,9 +36,17 @@ export default function TweetModal(props){
             as="textarea"
             rows="6"
             placeholder="¿Qué está pensando?"
+            onChange={(e) => setMessage(e.target.value)}
           />
-          <span className="count">{message.length}</span>
-          <Button type="submit">Tweetear</Button>
+          <span className={classNames("count", { error: message.length > maxLength })}>
+            {message.length}
+          </span>
+          <Button
+            type="submit"
+            disabled={message.length > maxLength || message.length < 1}
+          >
+            Tweetear
+          </Button>
         </Form>
       </Modal.Body>
     </Modal>
