@@ -4,7 +4,7 @@ import ConfigModal from "../../Modal/ConfigModal";
 import EditUserForm from "../../User/EditUserForm";
 import AvatarNoFound from "../../../assets/png/avatar-no-found.png";
 import { API_HOST } from "../../../utils/constant";
-import { checkFollowApi, followUserApi } from "../../../api/follow";
+import { checkFollowApi, followUserApi, unfollowUserApi } from "../../../api/follow";
 import "./BannerAvatar.scss";
 
 export default function BannerAvatar(props){
@@ -13,6 +13,7 @@ export default function BannerAvatar(props){
   //console.log(user);
 
   const [following, setFollowing] = useState(null);
+  console.log(following);
   const [reloadFollow, setReloadFollow] = useState(false);
 
   const bannerUrl = user?.banner ?  `${API_HOST}/obtenerBanner?id=${user.id}` : null;
@@ -20,13 +21,15 @@ export default function BannerAvatar(props){
   const avatarUrl = user?.avatar ? `${API_HOST}/obtenerAvatar?id=${user.id}` : AvatarNoFound;
 
   useEffect(() => {
-    checkFollowApi(user?.id).then(response => {
-      if (response?.status){
-        setFollowing(true);
-      } else {
-        setFollowing(false);
-      }
-    });
+    if(user){
+      checkFollowApi(user?.id).then(response => {
+        if (response?.status){
+          setFollowing(true);
+        } else {
+          setFollowing(false);
+        }
+      });
+    }
     setReloadFollow(false);
   }, [user, reloadFollow]);
 
@@ -37,7 +40,14 @@ export default function BannerAvatar(props){
     })
   }
 
- // console.log(loggedUser);
+  const onUnFollow = () => {
+    unfollowUserApi(user.id).then(() => {
+      setReloadFollow(true);
+    })
+  }
+
+
+  // console.log(loggedUser);
  // console.log(user);
 
   return(
@@ -51,7 +61,7 @@ export default function BannerAvatar(props){
         <div className="options">
           { loggedUser._id === user.id && ( <Button onClick={() => setShowModal(true)}>Editar perfil</Button> ) }
 
-          { loggedUser._id !== user.id && (following ? ( <Button>Siguiendo</Button> ) : ( <Button onClick={onFollow}>Seguir</Button>)) }
+          { loggedUser._id !== user.id && (following ? ( <Button onClick={onUnFollow} className="unfollow"><span>Siguiendo</span></Button> ) : ( <Button onClick={onFollow}>Seguir</Button>)) }
         </div>
       )}
       <ConfigModal show={showModal} setShow={setShowModal} title="Edita el perfil">
